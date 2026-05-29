@@ -1,29 +1,39 @@
-# 📊 cocapn-telemetry
+# cocapn-telemetry
 
-Cocapn fleet telemetry utilities — service monitoring, health checks, and metrics collection.
+Metrics and observability library for the Cocapn Fleet — thread-safe counters, gauges, histograms, and health checks for fleet vessels.
 
-## Install
+## What This Gives You
+
+- **Counter** — thread-safe monotonically increasing metric
+- **Gauge** — thread-safe value that can go up or down
+- **Histogram** — distribution tracking with configurable buckets
+- **Registry** — central metric registry for fleet-wide collection
+- **Health checks** — `/health` endpoint helpers for fleet monitoring
+
+## Quick Start
 
 ```bash
 pip install cocapn-telemetry
+
+from cocapn_telemetry import Counter, Gauge, Registry
+
+registry = Registry()
+requests = registry.counter("http_requests_total")
+latency = registry.gauge("request_latency_ms")
+
+requests.inc()
+latency.set(42.5)
 ```
 
-## What It Does
+## How It Fits
 
-Collects and reports telemetry from fleet services. Health checks, uptime monitoring, response time tracking, and resource usage metrics.
+The observability layer for the Cocapn Fleet. Part of the SuperInstance ecosystem.
 
-### Key Features
-
-- **Service Health** — Monitor all fleet services (PLATO, MUD, Matrix, etc.)
-- **Metrics Collection** — Response times, error rates, resource usage
-- **Alert Thresholds** — Configurable alerting on service degradation
-- **Fleet Dashboard** — Feed data to the Cocapn fleet dashboard
-
-## Part of the Cocapn Fleet
-
-- [keeper-beacon](https://github.com/cocapn/keeper-beacon) — Fleet discovery
-- [cocapn-dashboard](https://github.com/SuperInstance/cocapn-dashboard) — Live dashboard
+Related repos:
+- [cocapn-core](https://github.com/SuperInstance/cocapn-core) — core fleet library
+- [cocapn-health](https://github.com/SuperInstance/cocapn-health) — health check framework
+- [cocapn-observatory](https://github.com/SuperInstance/cocapn-observatory) — fleet monitoring
 
 ## License
 
-MIT
+Apache 2.0
